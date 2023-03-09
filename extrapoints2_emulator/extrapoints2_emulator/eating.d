@@ -1,0 +1,1 @@
+.\eating.o: eating.c

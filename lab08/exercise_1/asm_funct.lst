@@ -1,0 +1,135 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             check_square_function, CODE, RE
+ADONLY
+    2 00000000                 EXPORT           check_square
+    3 00000000         check_square
+                               PROC
+    4 00000000         ; save current SP for a faster access 
+    5 00000000         ; to parameters in the stack
+    6 00000000 46EC            MOV              r12, sp
+    7 00000002         ; save volatile registers
+    8 00000002 E92D 4DF0       STMFD            sp!,{r4-r8,r10-r11,lr}
+    9 00000006         
+   10 00000006         ; setup a value for R0 to return
+   11 00000006 6806            LDR              R6, [R0]
+   12 00000008 680F            LDR              R7, [R1]
+   13 0000000A FB06 F606       MUL              R6, R6, R6
+   14 0000000E FB07 F707       MUL              R7, R7, R7
+   15 00000012 EB06 0807       ADD              R8, R6, R7
+   16 00000016 FB02 F202       MUL              R2, R2, R2
+   17 0000001A         
+   18 0000001A EBB8 0802       SUBS             R8,R8, R2
+   19 0000001E BFD4 2001       MOVLE            R0, #1
+   20 00000022 2000            MOVGT            R0, #0
+   21 00000024         
+   22 00000024         
+   23 00000024         
+   24 00000024         ; restore volatile registers
+   25 00000024 E8BD 8DF0       LDMFD            sp!,{r4-r8,r10-r11,pc}
+   26 00000028         
+   27 00000028                 ENDP
+   28 00000028         
+   29 00000028         
+   30 00000028                 AREA             my_division_function, CODE, REA
+DONLY
+   31 00000000                 EXPORT           my_division
+   32 00000000         my_division
+                               PROC
+   33 00000000                 IMPORT           __aeabi_fdiv
+   34 00000000         ; save current SP for a faster access 
+   35 00000000         ; to parameters in the stack
+   36 00000000 46EC            MOV              r12, sp
+   37 00000002         ; save volatile registers
+   38 00000002 E92D 4DF0       STMFD            sp!,{r4-r8,r10-r11,lr}
+   39 00000006         
+   40 00000006         ; setup a value for R0 to return
+   41 00000006 6806            LDR              R6, [R0]
+   42 00000008 680F            LDR              R7,[R1]
+   43 0000000A 4631            MOV              R1, R6
+   44 0000000C 4638            MOV              R0, R7
+   45 0000000E F7FF FFFE       BL               __aeabi_fdiv
+   46 00000012         
+   47 00000012         ; restore volatile registers
+   48 00000012 E8BD 8DF0       LDMFD            sp!,{r4-r8,r10-r11,pc}
+   49 00000016         
+   50 00000016                 ENDP
+   51 00000016                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --depend=.\as
+m_funct.d -o.\asm_funct.o -I.\RTE\_Target_1 -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.8
+.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\LPC1700_DFP\2.7.1\Device\Inclu
+de --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 536" --prede
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+fine="_RTE_ SETA 1" --predefine="LPC175x_6x SETA 1" --predefine="_RTE_ SETA 1" 
+--list=.\asm_funct.lst ASM_funct.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+check_square 00000000
+
+Symbol: check_square
+   Definitions
+      At line 3 in file ASM_funct.s
+   Uses
+      At line 2 in file ASM_funct.s
+Comment: check_square used once
+check_square_function 00000000
+
+Symbol: check_square_function
+   Definitions
+      At line 1 in file ASM_funct.s
+   Uses
+      None
+Comment: check_square_function unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+my_division 00000000
+
+Symbol: my_division
+   Definitions
+      At line 32 in file ASM_funct.s
+   Uses
+      At line 31 in file ASM_funct.s
+Comment: my_division used once
+my_division_function 00000000
+
+Symbol: my_division_function
+   Definitions
+      At line 30 in file ASM_funct.s
+   Uses
+      None
+Comment: my_division_function unused
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+__aeabi_fdiv 00000000
+
+Symbol: __aeabi_fdiv
+   Definitions
+      At line 33 in file ASM_funct.s
+   Uses
+      At line 45 in file ASM_funct.s
+Comment: __aeabi_fdiv used once
+1 symbol
+339 symbols in table

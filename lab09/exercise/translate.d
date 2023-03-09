@@ -1,0 +1,1 @@
+.\translate.o: translate.s

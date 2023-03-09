@@ -1,0 +1,1 @@
+.\mute.o: mute.c

@@ -1,0 +1,1 @@
+.\meal.o: meal.c
